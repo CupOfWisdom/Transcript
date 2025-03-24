@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify
 import json
 import os
 import transcript  # Importa o script de transcrição
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe_video():
@@ -20,8 +22,16 @@ def transcribe_video():
     file.save(video_path)
 
     try:
+        
+        print("\n🎥 Recebido novo vídeo:", file.filename)
+        print("⏳ Processando vídeo...")
+        
+        
         # Chama a função do transcription.py
         transcription_data = transcript.process_video(video_path)
+        
+        print("✅ Processamento concluído!")
+        print("📝 Transcrição salva em transcription.json\n")
 
         # Remove o vídeo temporário
         os.remove(video_path)
@@ -34,6 +44,7 @@ def transcribe_video():
         )
     
     except Exception as e:
+        print("❌ Erro ao processar vídeo:", str(e))
         return jsonify({"error": str(e)}), 500
 
 @app.route('/transcription', methods=['GET'])

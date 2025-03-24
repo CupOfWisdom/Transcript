@@ -11,13 +11,8 @@ def extract_audio(video_path, audio_path="temp_audio.wav"):
 
 def transcribe_audio(audio_path):
     """Transcreve o áudio utilizando Whisper"""
-<<<<<<< HEAD
-    model = whisper.load_model("medium")  # Escolha o modelo: tiny, base, small, medium, large
-    result = model.transcribe(audio_path)
-=======
-    model = whisper.load_model("small")  # Escolha o modelo: tiny, base, small, medium, large
+    model = whisper.load_model("medium")  # ou "small", dependendo da sua necessidade
     result = model.transcribe(audio_path, language="pt", temperature=0.0)
->>>>>>> master
     return result["text"]
 
 def process_video(video_path, output_json="transcription.json"):
