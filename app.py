@@ -10,10 +10,10 @@ CORS(app)
 @app.route('/transcribe', methods=['POST'])
 def transcribe_video():
     """Recebe um vídeo, processa e retorna a transcrição"""
-    if 'file' not in request.files:
+    if 'video' not in request.files:
         return jsonify({"error": "No file provided"}), 400
 
-    file = request.files['file']
+    file = request.files['video']
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
 
@@ -50,10 +50,10 @@ def transcribe_video():
 @app.route('/transcribe_with_time', methods=['POST'])
 def transcribe_with_time():
     """Recebe um vídeo, processa e retorna a transcrição"""
-    if 'file' not in request.files:
+    if 'video' not in request.files:
         return jsonify({"error": "No file provided"}), 400
 
-    file = request.files['file']
+    file = request.files['video']
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
 
@@ -102,4 +102,4 @@ def get_transcription():
         return jsonify({"error": "No transcription available"}), 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port= 5050)
